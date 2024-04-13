@@ -33,7 +33,6 @@ The `train_model` function sets up and trains a multi-label classification model
 ### Prediction
 
 The `predict_tags` function uses the trained model to assign tags to new or existing Wikipedia entries, helping to anticipate the impact of future solar events on these pages.
-rrepositorylink.com
 
 
 
