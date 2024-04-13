@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is designed to analyze the impact of solar industry events on Wikipedia page edits. Specifically, it seeks to predict which tags (labels) related to solar technology might be most relevant to different Wikipedia entries based on past editing data correlated with solar event occurrences.
+wiki_multilabel_prediction_solarevents.py encloses scraping Wikipedia data, preprocessing text, vectorizing content, training a multi-label classification model, and visualizing the results.This project is designed to analyze the impact of solar industry events on Wikipedia page edits. Specifically, it seeks to predict which tags (labels) related to solar technology might be most relevant to different Wikipedia entries based on past editing data correlated with solar event occurrences.
 
 ## Installation
 
@@ -15,24 +15,62 @@ To run this project, follow these steps:
    
 #### Code Explanation
 
-```markdown
+This project automates the process of predicting relevant tags for Wikipedia articles related to solar events using Natural Language Processing and Machine Learning. It includes web scraping, data preprocessing, model training, prediction, and data visualization steps to analyze the relationships between different tags.
+
 ## Code Explanation
+
+
+### Installation Requirements
+
+The script requires several Python libraries including pandas, BeautifulSoup, requests, nltk, scikit-learn, tensorflow, and visualization libraries.
+
 
 ### Data Collection
 
-The `fetch_data` function is responsible for gathering data using the Wikipedia API. It collects revision histories and page edit details related to solar events.
+Function scrape_website: Fetches data from a specified Wikipedia URL and extracts text content using BeautifulSoup. It handles HTTP errors gracefully and returns the title and combined text of all paragraphs.
+Function main: Orchestrates the scraping process for multiple URLs, collects the scraped data, and stores it in a pandas DataFrame.
 
 ### Data Processing
 
-The `process_data` function cleans and structures the raw data into a format suitable for analysis. This includes normalizing text data and extracting relevant features.
+**Text Processing**
+NLTK Setup: Downloads and sets up NLTK stopwords for English for text preprocessing.
+Function preprocess_text: Processes text data by converting to lowercase, removing stopwords, and stemming the remaining words.
+
+**Data Preparation**
+The script loads an events dataset, splits 'Tags' into a list, and preprocesses the 'Event description' using the above text processing function.
+Vectorization: Uses TfidfVectorizer to convert text data into a TF-IDF matrix.
 
 ### Model Training
 
-The `train_model` function sets up and trains a multi-label classification model. This model learns to predict the relevance of various tags based on the features extracted from the Wikipedia data.
+A sequential model from Keras is configured with dense layers and dropout for regularization. It's trained on vectorized text data with corresponding multi-label binary vectors.
+Predictions are made on new data, and the results are processed to map the predicted binary vectors back to tag names.
+
+**Multi-Label Classification**
+Sets up a neural network model using TensorFlow's Keras API, designed for multi-label classification with sigmoid activation and binary crossentropy loss.
+Trains the model on the training dataset and evaluates it on a test set.
+
 
 ### Prediction
 
-The `predict_tags` function uses the trained model to assign tags to new or existing Wikipedia entries, helping to anticipate the impact of future solar events on these pages.
+Makes predictions on new data scraped from predefined Wikipedia pages about solar technologies.
+Predicts tags based on the content using the trained model and assigns predicted tags back to the DataFrame.
+
+### Data Visualization
+
+Heatmaps and bar charts are generated to analyze tag co-occurrence and label frequency, respectively, using matplotlib and seaborn.
+
+**Tag Co-occurrence Heatmap**
+Calculates and plots a heatmap using seaborn to show the co-occurrence of tags across the dataset, helping to visualize relationships between different tags.
+
+**Label Frequency Distribution**
+Plots a bar chart showing the frequency of each predicted tag across all documents, providing insights into the most common themes.
+
+
+### Functions
+
+scrape_website and scrape_website1: These functions extract titles and paragraphs from given Wikipedia URLs. They are used for both training data preparation and prediction.
+main and main1: These orchestrator functions handle batch processing of multiple URLs for data scraping and preparation.
+preprocess_text: This function cleans and preprocesses text data to prepare it for vectorization and modeling.
 
 
 
@@ -40,13 +78,15 @@ The `predict_tags` function uses the trained model to assign tags to new or exis
 
 Explain how to run the program, including any scripts that should be executed or services that need to be started.
 
-```markdown
+
 ## Usage
 
 To start the program, navigate to the project directory and run the following script:
 
-```python
+```markdown
 python wiki_multilabel_prediction_solarevents.py
+```
+
 
 
 This script performs several key functions:
